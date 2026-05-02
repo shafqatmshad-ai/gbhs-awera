@@ -1,0 +1,106 @@
+<!-- ==========================
+  1) FRONTEND (HTML + JS)
+========================== -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Form</title>
+<style>
+body{font-family:Arial;background:#f4f4f4;text-align:center;}
+input,select,textarea{width:250px;margin:5px;padding:8px;}
+#card{display:none;background:white;padding:10px;margin-top:20px;border:1px solid #000;}
+</style>
+</head>
+<body>
+
+<h2>💾 Student Form</h2>
+
+<input id="name" placeholder="Name"><br>
+<input id="fname" placeholder="Father Name"><br>
+<input id="cnic" placeholder="CNIC"><br>
+<input id="dob" type="date"><br>
+
+<select id="gender">
+<option value="">Gender</option>
+<option>Male</option>
+<option>Female</option>
+</select><br>
+
+<select id="class">
+<option value="">Class</option>
+<option>One</option>
+<option>Two</option>
+<option>Three</option>
+</select><br>
+
+<input id="result" placeholder="Result"><br>
+<textarea id="address" placeholder="Address"></textarea><br>
+
+<input type="file" id="photo"><br><br>
+
+<button onclick="submitForm()">Save</button>
+
+<div id="card">
+<h3>🎓 Student Card</h3>
+<img id="cardPhoto" width="100"><br><br>
+<p id="cardData"></p>
+<button onclick="printCard()">🖨️ Print</button>
+</div>
+
+<script>
+function submitForm(){
+
+let file=document.getElementById("photo").files[0];
+let reader=new FileReader();
+
+reader.onload=function(){
+
+let base64=reader.result;
+
+let data={
+name:document.getElementById('name').value,
+fatherName:document.getElementById('fname').value,
+cnic:document.getElementById('cnic').value,
+dob:document.getElementById('dob').value,
+gender:document.getElementById('gender').value,
+studentClass:document.getElementById('class').value,
+result:document.getElementById('result').value,
+address:document.getElementById('address').value,
+photo:base64
+};
+
+fetch("https://script.google.com/macros/s/AKfycbwJ6t06Ajq9P1oNHWoXZLVksyV4W8OlkUE_OfDqi8vn5QBuTHf0tl0HQOOYuN1BJuk/exec",{
+method:"POST",
+body:JSON.stringify(data)
+});
+
+alert("Saved Successfully");
+
+document.getElementById("card").style.display="block";
+document.getElementById("cardPhoto").src=base64;
+
+document.getElementById("cardData").innerHTML=
+"Name: "+data.name+"<br>"
++"Father: "+data.fatherName+"<br>"
++"CNIC: "+data.cnic+"<br>"
++"DOB: "+data.dob+"<br>"
++"Gender: "+data.gender+"<br>"
++"Class: "+data.studentClass+"<br>"
++"Result: "+data.result+"<br>"
++"Address: "+data.address;
+};
+
+reader.readAsDataURL(file);
+}
+
+function printCard(){
+let win=window.open('','','width=700,height=600');
+win.document.write(document.getElementById("card").innerHTML);
+win.print();
+}
+</script>
+
+</body>
+</html>
+
+
