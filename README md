@@ -1,0 +1,26 @@
+# 🌐 Web Project
+
+Welcome to my GitHub Pages website.
+
+## 📌 Project Details
+This is a simple web project hosted using GitHub Pages.  
+It includes HTML pages, images, and downloadable documents.
+
+## 📂 Folder Structure
+web/
+ ├── index.html
+ ├── docs/
+ │    └── result-2026.pdf
+ ├── images/
+ └── style.css
+
+## 📥 Download Section
+You can download the result PDF from here:
+
+👉 [Download Result](docs/result-2026.pdf)
+
+## 🚀 Live Website
+https://shafqatmshad-ai.github.io/web/
+
+## 👨‍💻 Author
+Shafqat Mahmood
