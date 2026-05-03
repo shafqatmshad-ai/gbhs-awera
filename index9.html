@@ -1,108 +1,208 @@
-<!-- ==========================
-  1) FRONTEND (HTML + JS)
-========================== -->
 <!DOCTYPE html>
 <html>
 <head>
-<title>Student Form</title>
+<title>Registration Form</title>
+
 <style>
-body{font-family:Arial;background:#f4f4f4;text-align:center;}
-input,select,textarea{width:250px;margin:5px;padding:8px;}
-#card{display:none;background:white;padding:10px;margin-top:20px;border:1px solid #000;}
+body {
+    font-family: Arial;
+    background: #eee;
+}
+
+.form-box {
+    width: 800px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border: 2px solid #000;
+}
+
+.header {
+    text-align: center;
+}
+
+.top-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.photo-box {
+    width: 120px;
+    height: 140px;
+    border: 1px solid black;
+}
+
+input, select {
+    width: 100%;
+    padding: 6px;
+    margin-top: 5px;
+    border: 1px solid #000;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    background: black;
+    color: white;
+    border: none;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
 </style>
+
 </head>
+
 <body>
 
-<h2>💾 Student Form</h2>
+<div class="form-box">
 
-<input id="name" placeholder="Name"><br>
-<input id="fname" placeholder="Father Name"><br>
-<input id="cnic" placeholder="CNIC"><br>
-<input id="dob" type="date"><br>
+<div class="header">
+<h1>📘 Government Boys High School Awera Bagh AK</h1>
+<h2>Registration Form</h2>
+</div>
 
+<div class="top-section">
+<div>
+<b>Registration No:</b> <b>Office Use:</b> __________<br><br>
+<b>Session:</b> 2026
+</div>
+
+<div class="photo-box">
+<img id="preview" width="100%" height="100%">
+</div>
+</div>
+
+<label>Student Name</label>
+<input type="text" id="name">
+
+<label>Father Name</label>
+<input type="text" id="fname">
+
+<label>CNIC</label>
+<input type="text" id="cnic">
+
+<div class="row">
+<div>
+<label>DOB</label>
+<input type="date" id="dob">
+</div>
+
+<div>
+<label>Gender</label>
 <select id="gender">
-<option value="">Gender</option>
 <option>Male</option>
 <option>Female</option>
-</select><br>
+</select>
+</div>
+</div>
 
+<label>Class</label>
 <select id="class">
-<option value="">Classpassedlastyear</option>
-  <option>nursery</option><option>prep</option>
-<option>One</option>
-<option>Two</option>
-<option>Three</option><option>four</option><option>five</option><option>six</option><option>seven</option><option>eight</option>
-  <option>nine</option>
-</select><br>
+<option>5th</option>
+<option>8th</option>
+<option>9th</option>
+<option>10th</option>
+</select>
 
-<input id="result" placeholder="Result"><br>
-<textarea id="address" placeholder="Address"></textarea><br>
+<label>Address</label>
+<input type="text" id="address">
 
-<input type="file" id="photo"><br><br>
+<label>Upload Photo</label>
+<input type="file" id="photo">
 
-<button onclick="submitForm()">Save</button>
+<hr>
 
-<div id="card">
-<h3>🎓 Student Card</h3>
-<img id="cardPhoto" width="100"><br><br>
-<p id="cardData"></p>
-<button onclick="printCard()">🖨️ Print</button>
+<h3>Rules & Regulations</h3>
+<ul>
+<li>Fill form carefully</li>
+<li>Incorrect info will be rejected</li>
+<li>Attach photo</li>
+</ul>
+
+<h3 style="text-align:right;">قواعد و ضوابط</h3>
+<ul style="direction:rtl; text-align:right;">
+<li>تمام معلومات درست درج کریں</li>
+<li>غلط معلومات مسترد ہو گی</li>
+<li>تصویر لازمی لگائیں</li>
+</ul>
+
+<label>
+<input type="checkbox" id="agree"> I agree information is correct
+</label>
+
+<div class="footer">
+<div>__________<br>Student Sign</div>
+<div>__________<br>Incharge Registration  Sign</div>
+<div>__________<br>Principal</div>
+</div>
+
+<button class="btn" onclick="submitForm()">Submit</button>
+<button class="btn" onclick="printForm()">Print</button>
+
 </div>
 
 <script>
-function submitForm(){
 
-let file=document.getElementById("photo").files[0];
-let reader=new FileReader();
 
-reader.onload=function(){
 
-let base64=reader.result;
-
-let data={
-name:document.getElementById('name').value,
-fatherName:document.getElementById('fname').value,
-cnic:document.getElementById('cnic').value,
-dob:document.getElementById('dob').value,
-gender:document.getElementById('gender').value,
-studentClass:document.getElementById('class').value,
-result:document.getElementById('result').value,
-address:document.getElementById('address').value,
-photo:base64
-};
-
-fetch("https://script.google.com/macros/s/AKfycbwJ6t06Ajq9P1oNHWoXZLVksyV4W8OlkUE_OfDqi8vn5QBuTHf0tl0HQOOYuN1BJuk/exec",{
-method:"POST",
-body:JSON.stringify(data)
+// Photo Preview
+document.getElementById("photo").addEventListener("change", function(e){
+    let reader = new FileReader();
+    reader.onload = function(){
+        document.getElementById("preview").src = reader.result;
+    }
+    reader.readAsDataURL(e.target.files[0]);
 });
 
-alert("Saved Successfully");
+// Submit
+function submitForm(){
 
-document.getElementById("card").style.display="block";
-document.getElementById("cardPhoto").src=base64;
+let agree = document.getElementById("agree");
 
-document.getElementById("cardData").innerHTML=
-"Name: "+data.name+"<br>"
-+"Father: "+data.fatherName+"<br>"
-+"CNIC: "+data.cnic+"<br>"
-+"DOB: "+data.dob+"<br>"
-+"Gender: "+data.gender+"<br>"
-+"Class: "+data.studentClass+"<br>"
-+"Result: "+data.result+"<br>"
-+"Address: "+data.address;
+if(!agree.checked){
+    alert("Accept declaration first");
+    return;
+}
+
+let data = {
+
+name: document.getElementById("name").value,
+fname: document.getElementById("fname").value,
+cnic: document.getElementById("cnic").value,
+dob: document.getElementById("dob").value,
+gender: document.getElementById("gender").value,
+class: document.getElementById("class").value,
+address: document.getElementById("address").value,
+photo: document.getElementById("preview").src
 };
 
-reader.readAsDataURL(file);
+fetch("https://script.google.com/macros/s/AKfycbwZ-eqOtHGK9Ai-Zbdl-XsfqRQuOM_V5R-n3NYdeIZdVk30tFRJHyZb3r7310ioZ7s1/exec", {
+method: "POST",
+body: JSON.stringify(data)
+})
+.then(res => res.text())
+.then(res => alert("Saved ✅"))
+.catch(err => alert("Error ❌"));
+
 }
 
-function printCard(){
-let win=window.open('','','width=700,height=600');
-win.document.write(document.getElementById("card").innerHTML);
-win.print();
+// Print
+function printForm(){
+window.print();
 }
+
 </script>
 
 </body>
 </html>
-
 
