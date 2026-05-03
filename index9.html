@@ -11,46 +11,66 @@ body {
 
 .form-box {
     width: 800px;
-    margin: auto;
+    margin: 20px;
     background: #fff;
-    padding: 20px;
+    padding: 10px;
     border: 2px solid #000;
 }
 
 .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     text-align: center;
+}
+
+.header img {
+    width: 80px;
+    height: 80px;
 }
 
 .top-section {
     display: flex;
     justify-content: space-between;
+    margin-top: 10px;
 }
 
 .photo-box {
-    width: 120px;
-    height: 130px;
+    width: 100px;
+    height: 120px;
     border: 1px solid black;
 }
 
+label {
+    display: block;
+    margin-top: 10px;
+}
+
 input, select {
-    width: 100%;
-    padding: 5px;
+    width: 95%;
+    padding: 6px;
     margin-top: 5px;
     border: 1px solid #000;
 }
 
 .row {
     display: flex;
-    gap: 8px;
+    gap: 10px;
+}
+
+.row div {
+    width: 48%;
 }
 
 .btn {
-    margin-top: 8px;
+    margin-top: 10px;
     padding: 10px;
     width: 100%;
     background: black;
     color: white;
     border: none;
+    cursor: pointer;
 }
 
 .footer {
@@ -67,17 +87,16 @@ input, select {
 <div class="form-box">
 
 <div class="header">
-<h1>📘 Government Boys High School Awera Bagh AK</h1>
-<div class="header">
-    <img src="images/logo.png" alt="School Logo" width="100">
-    <h2>Registration Form</h2>
+   
+    <div>
+        <h2>Government Boys High School Awera Bagh AK</h2><img src="images/logo.png">
+        <h3>Registration Form</h3>
+    </div>
 </div>
 
 <div class="top-section">
-<div>
-<b>Registration No:</b> <b>Office Use:</b> __________<br><br>
-<b>Session:</b> 2026
-</div>
+<div><b>Reg No:</b> ________</div>
+<div><b>Session: 2026</b></div>
 
 <div class="photo-box">
 <img id="preview" width="100%" height="100%">
@@ -109,9 +128,16 @@ input, select {
 </div>
 
 <label>Class</label>
-<select id="class"><option>Nursery</option><option>Prep</option>
-<option>One</option><option>Two</option><option>Three</option><option>4th</option>
-<option>5th</option><option>6th</option><option>7th</option>
+<select id="class">
+<option>Nursery</option>
+<option>Prep</option>
+<option>One</option>
+<option>Two</option>
+<option>Three</option>
+<option>4th</option>
+<option>5th</option>
+<option>6th</option>
+<option>7th</option>
 <option>8th</option>
 <option>9th</option>
 <option>10th</option>
@@ -124,48 +150,37 @@ input, select {
 <input type="file" id="photo">
 
 <hr>
-
-<div class="rules-box">
-    <h3>Rules & Instructions</h3>
-    <ul>
-        <li>Fill the registration form carefully with correct information.</li>
-        <li>Incomplete or incorrect forms will not be accepted.</li>
-        <li>Attach a copy of Form B with the hard copy of the registration form at the time of submission in the office.</li>
-        <li>Attach two recent passport size photographs.</li>
-        <li>Bring original documents for verification.</li>
-        <li>Submit the form before the last date.</li>
-        <li>After submission, no changes will be allowed.</li>
-    </ul>
-</div>
-
-
-
+<div class="rules-box"> <h3>Rules & Instructions</h3> <ul> <li>Fill the registration form carefully with correct information.</li> <li>Incomplete or incorrect forms will not be accepted.</li> <li>Attach a copy of Form B with the hard copy at submission.</li> <li>Attach two passport size photographs.</li> <li>Bring original documents for verification.</li> <li>Submit before last date.</li> <li>No changes allowed after submission.</li> </ul> </div>
 <label>
-<input type="checkbox" id="agree"> I agree information is correct
+<input type="checkbox" id="agree"><br> I agree information is correct
 </label>
 
 <div class="footer">
-<div>__________<br>Student Sign</div>
-<div>__________<br>Incharge Registration  Sign</div>
+<div>__________<br>Student sign</div>
+<div>__________<br>Incharge</div>
 <div>__________<br>Principal</div>
 </div>
 
-<button class="btn" onclick="submitForm()">Submit</button>
-<button class="btn" onclick="printForm()">Print</button>
+<button type="button" class="btn" onclick="submitForm()">Submit</button>
+<button type="button" class="btn" onclick="printForm()">Print</button>
 
 </div>
 
 <script>
 
-
-
 // Photo Preview
 document.getElementById("photo").addEventListener("change", function(e){
+
+let file = e.target.files[0];
+
+if(file){
     let reader = new FileReader();
     reader.onload = function(){
         document.getElementById("preview").src = reader.result;
     }
-    reader.readAsDataURL(e.target.files[0]);
+    reader.readAsDataURL(file);
+}
+
 });
 
 // Submit
@@ -179,7 +194,6 @@ if(!agree.checked){
 }
 
 let data = {
-
 name: document.getElementById("name").value,
 fname: document.getElementById("fname").value,
 cnic: document.getElementById("cnic").value,
@@ -190,7 +204,7 @@ address: document.getElementById("address").value,
 photo: document.getElementById("preview").src
 };
 
-fetch("https://script.google.com/macros/s/AKfycbwZ-eqOtHGK9Ai-Zbdl-XsfqRQuOM_V5R-n3NYdeIZdVk30tFRJHyZb3r7310ioZ7s1/exec", {
+fetch("https://script.google.com/macros/s/AKfycbyHLii8WRwMwC8UZLQrGTO6Uq2FdxjrvpnyK-rhh14I_0_LbzDFJVcmnuRzC6giMFWj/exec", {
 method: "POST",
 body: JSON.stringify(data)
 })
@@ -209,4 +223,5 @@ window.print();
 
 </body>
 </html>
+
 
